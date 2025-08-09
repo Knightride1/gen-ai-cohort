@@ -1,5 +1,4 @@
 .env
 venv/
-genai-cohort/
 .vscode/
 .gitignore

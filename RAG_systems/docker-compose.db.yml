@@ -1,0 +1,8 @@
+services:
+ qdrant:
+    image: qdrant/qdrant
+    ports:
+      - 6333:6333
+
+# sudo docker compose --file docker-compose.db.yml up
+# command for starting up the docker container for this qdrant db

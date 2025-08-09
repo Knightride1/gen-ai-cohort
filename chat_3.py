@@ -5,10 +5,9 @@ from openai import OpenAI
 
 load_dotenv()
 
-client = OpenAI(
-    api_key=os.getenv("GEMINI_API_KEY"),
-    base_url="https://generativelanguage.googleapis.com/v1beta"
-)
+client = OpenAI()
+
+
 system_prompt = """
 You are an Ai assistant who is expert in breaking down complex problems and then resolve the user query
 
@@ -44,20 +43,13 @@ response = client.chat.completions.create(
     messages=[
         {"role": "system", "content": system_prompt},
         {"role": "user", "content": "What is 3+4*5"},
-        {"role": "assistant", "content": json.dumps({"step": "analyze", "content": "The user is asking to evaluate the expression '3+4*5'. This involves addition and multiplication. Need to consider operator precedence."})},
-        {"role": "assistant", "content": json.dumps({"step": "think", "content": "According to the order of operations (PEMDAS/BODMAS), multiplication should be performed before addition. So, first calculate 4*5, and then add 3 to the result."})},
         {"role": "assistant", "content": json.dumps({
-  "step": "output",
-  "content": "23"
+  "step": "analyze",
+  "content": "The user has provided an arithmetic expression '3+4*5'. It involves addition and multiplication."
 })},
-{"role": "assistant", "content": json.dumps({
-"step": "validate",
-"content": "Let's verify the answer. 4 * 5 = 20, and 3 + 20 = 23.  The calculation seems correct."
-})},
-{"role": "assistant", "content": json.dumps({
-"step": "result",
-"content": "3 + 4 * 5 = 3 + (4 * 5) = 3 + 20 = 23. The result is 23 due to multiplication taking precedence over addition."
-})}
+{"role": "assistant", "content": json.dumps({"step": "think", "content": "To solve this, I need to remember the order of operations (PEMDAS/BODMAS): Parentheses/Brackets, Exponents/Orders, Multiplication and Division (from left to right), and Addition and Subtraction (from left to right). Multiplication should be performed before addition."})},
+{"role": "assistant", "content": json.dumps({"step": "output", "content": "First, calculate 4 * 5 = 20. Then, calculate 3 + 20 = 23."})}
+        
     ]
 )
 
