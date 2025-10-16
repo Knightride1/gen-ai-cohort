@@ -28,7 +28,7 @@ response = client.chat.completions.create(
     model="gpt-4",
     messages=[
         {"role": "system", "content": system_prompt},
-        {"role": "user", "content": "2+9"} 
+        {"role": "user", "content": "what is a car"} 
     ]
 )
 
